@@ -86,7 +86,7 @@ func (m *MetricVec) IndexWith(labels ...string) error {
 		return fmt.Errorf("curried metric vec cannot be indexed")
 	}
 	var labelSeqMap = map[string]int{}
-	for i, label := range m.desc.variableLabels {
+	for i, label := range m.desc.variableLabels.labelNames() {
 		labelSeqMap[label] = i
 	}
 	var indexingLabelSeqs = make([]int, 0, len(labels))
@@ -501,7 +501,7 @@ func (m *metricMap) deleteByHashWithIndexedLabels(labels Labels) (r bool) {
 	defer m.mtx.Unlock()
 
 	var lvs []string
-	for _, k := range m.desc.variableLabels {
+	for _, k := range m.desc.variableLabels.labelNames() {
 		if v, ok := labels[k]; ok {
 			lvs = append(lvs, v)
 		}
