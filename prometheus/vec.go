@@ -83,7 +83,7 @@ func (m *MetricVec) IndexWith(labels ...string) error {
 	var indexerKey = strings.Join(labels, ":")
 	var indexer = func(lvs ...string) uint64 { // hashValues
 		var h = hashNew()
-		if len(lvs) == len(m.desc.variableLabels) {
+		if len(lvs) == len(m.desc.variableLabels.names) {
 			for _, seq := range indexingLabelSeqs {
 				h = m.hashAdd(h, lvs[seq])
 				h = m.hashAddByte(h, model.SeparatorByte)
